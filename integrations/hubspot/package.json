@@ -10,12 +10,14 @@
   "private": true,
   "dependencies": {
     "@botpress/client": "0.29.2",
-    "@botpress/sdk": "^0.10.13"
+    "@botpress/sdk": "^0.10.13",
+    "@hubspot/api-client": "^11.2.0"
   },
   "devDependencies": {
     "@botpress/cli": "^0.8.62",
     "@types/node": "^18.11.17",
     "nodemon": "^3.1.4",
+    "prettier": "^3.3.3",
     "ts-node": "^10.9.1",
     "typescript": "^4.9.4"
   }
