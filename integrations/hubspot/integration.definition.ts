@@ -24,7 +24,25 @@ export default new IntegrationDefinition({
         }),
       },
     },
-    // TODO: Read leads
+    getLeads: {
+      title: 'Get leads',
+      description: 'Get all leads',
+      input: {
+        schema: z.object({}),
+      },
+      output: {
+        schema: z.object({
+          results: z.array(
+            z.object({
+              id: z.string().describe('The ID of the lead'),
+              name: z.string().describe('The name of the lead'),
+              type: z.string().nullable().describe('The type of lead (Internal value)'),
+              label: z.string().nullable().describe('The label of the lead (Internal value)'),
+            }),
+          ),
+        }),
+      },
+    },
     // TODO: Update leads
     // TODO: Delete leads
   },
