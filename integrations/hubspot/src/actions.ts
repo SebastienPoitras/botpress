@@ -2,6 +2,7 @@ import * as sdk from '@botpress/sdk'
 import * as bp from '.botpress'
 import * as hs from '@hubspot/api-client'
 import { CreateLeadAssociationTypeArgs, Lead } from './types'
+import { emptyStrToUndefined } from './utils'
 
 const LEAD_TO_CONTACT_ASSOCIATION_TYPE: CreateLeadAssociationTypeArgs = {
   associationCategory: 'HUBSPOT_DEFINED',
@@ -12,7 +13,6 @@ const createLead: bp.IntegrationProps['actions']['createLead'] = async ({ input,
   const { primaryContactId, name, type, label } = input
 
   /** Return undefined if the value is an empty string, else return the value */
-  const emptyStrToUndefined = (value: string | undefined) => (value === '' ? undefined : value)
   const client = new hs.Client({ accessToken: ctx.configuration.apiKey })
   const request = {
     method: 'POST',
@@ -71,7 +71,30 @@ const getLeads: bp.IntegrationProps['actions']['getLeads'] = async ({ ctx }) => 
   }
 }
 
+const updateLead: bp.IntegrationProps['actions']['updateLead'] = async ({ ctx, input }) => {
+  const client = new hs.Client({ accessToken: ctx.configuration.apiKey })
+  const { id, name, type, label } = input
+  const request = {
+    method: 'PATCH',
+    path: `/crm/v3/objects/leads${id}`,
+    body: {
+      hs_lead_name: emptyStrToUndefined(name),
+      hs_lead_type: emptyStrToUndefined(type),
+      hs_lead_label: emptyStrToUndefined(label),
+    },
+  }
+  // TODO: Complete this function
+  client.apiRequest(request);
+  return {
+    id: '123',
+    name: null,
+    type: null,
+    label: null,
+  }
+}
+
 export default {
   createLead,
   getLeads,
+  updateLead,
 } satisfies bp.IntegrationProps['actions']

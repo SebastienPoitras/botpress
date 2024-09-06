@@ -1,5 +1,6 @@
 import { z, IntegrationDefinition } from '@botpress/sdk'
 import { integrationName } from './package.json'
+import { updateLanguageServiceSourceFile } from 'typescript'
 
 export default new IntegrationDefinition({
   name: integrationName,
@@ -43,7 +44,26 @@ export default new IntegrationDefinition({
         }),
       },
     },
-    // TODO: Update leads
+    updateLead: {
+      title: 'Update a lead',
+      description: 'Update a lead based on the provided parameters',
+      input: {
+        schema: z.object({
+          id: z.string().describe('The ID of the lead to update'),
+          name: z.string().optional().nullable().describe('The name of the lead'),
+          type: z.string().optional().nullable().describe('The type of lead (Internal value)'),
+          label: z.string().optional().nullable().describe('The label of the lead (Internal value)'),
+        }),
+      },
+      output: {
+        schema: z.object({
+          id: z.string().describe('The ID of the lead to update'),
+          name: z.string().nullable().describe('The name of the lead'),
+          type: z.string().nullable().describe('The type of lead (Internal value)'),
+          label: z.string().nullable().describe('The label of the lead (Internal value)'),
+        }),
+      },
+    },
     // TODO: Delete leads
   },
   configuration: {
